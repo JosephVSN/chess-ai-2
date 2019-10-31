@@ -5,12 +5,11 @@ var board,
 var onMoveEnd = function(oldPos, newPos) {
   // Alert if game is over
   if (game.game_over() === true) {
-    alert('Game Over');
     console.log('Game Over');
   }
 
   // Log the current game position
-  console.log(game.fen());
+  //console.log(game.fen());
 };
 
 // Check before pick pieces that it is white and game is not over

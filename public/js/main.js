@@ -2,7 +2,12 @@
 var makeMove = function(algo, skill=3) {
   // exit if the game is over
   if (game.game_over() === true) {
-    console.log('game over');
+    if (game.turn() === 'w') {
+      console.log("Black wins");
+    } else {
+      console.log("White wins");
+    }
+    //console.log('game over');
     return;
   }
   // Calculate the best move, using chosen algorithm
@@ -12,8 +17,10 @@ var makeMove = function(algo, skill=3) {
     var move = calcBestMoveOne(game.turn());
   } else if (algo === 3) {
     var move = calcBestMoveNoAB(skill, game, game.turn())[1];
-  } else {
+  } else if (algo === 4) {
     var move = calcBestMove(skill, game, game.turn())[1];
+  } else {
+    var move = calcBestMovePoorly(skill, game, game.turn())[1];
   }
   // Make the calculated move
   game.move(move);
@@ -22,15 +29,21 @@ var makeMove = function(algo, skill=3) {
 }
 
 // Computer vs Computer
-var playGame = function(algo=4, skillW=2, skillB=2) {
+var playGame = function(algoW=4, algoB=4, skillW=2, skillB=2) {
   if (game.game_over() === true) {
-    console.log('game over');
+      if (game.turn() === 'w') {
+        console.log("Black wins");
+      } else {
+        console.log("White wins");
+      }
+    //console.log('game over');
     return;
   }
+  var algo = game.turn() === 'w' ? algoW : algoB;
   var skill = game.turn() === 'w' ? skillW : skillB;
   makeMove(algo, skill);
   window.setTimeout(function() {
-    playGame(algo, skillW, skillB);
+    playGame(algoW, algoB, skillW, skillB);
   }, 250);
 };
 
